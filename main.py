@@ -90,23 +90,24 @@ def calculate_next_prayer(data_block, city):
     print()
 
 if __name__ == "__main__":
-    city = ""
-    country = ""
     
-    # The Interactive Menu Loop
+    # The Main Application Loop
     while True:
+        city = ""
+        country = ""
+        
         print("\n" + "="*35)
         print("Welcome to PraySync")
         print("="*35)
         print("1. Enter a specific city manually")
         print("2. Use my current location (Auto-detect)")
+        print("3. Exit")
         
-        choice = input("\nPlease select an option (1 or 2): ").strip()
+        choice = input("\nPlease select an option (1, 2, or 3): ").strip()
         
         if choice == "1":
             city = input("Enter city name (e.g., Karachi): ").strip()
             country = input("Enter country name (optional, press Enter to skip): ").strip()
-            break # Exit the menu loop because we got valid input
             
         elif choice == "2":
             print("\nAuto-detecting location from your IP address...")
@@ -114,18 +115,24 @@ if __name__ == "__main__":
             
             if not city:
                 print("Error: Could not detect location. Please try again using Option 1.")
-                continue # Go back to the top of the menu loop
+                continue # Skips the rest of the loop and restarts the menu
             else:
                 print(f"Location detected: {city}, {country}")
-                break # Exit the menu loop
                 
+        elif choice == "3":
+            print("\nExiting PraySync. Allah Hafiz!\n")
+            sys.exit(0) # Safely closes the Python script
+            
         else:
-            print("Invalid choice! Please enter exactly 1 or 2.")
-            # The loop will automatically restart here
+            print("Invalid choice! Please enter exactly 1, 2, or 3.")
+            continue # Skips the rest of the loop and restarts the menu
 
-    # Once the loop is broken, fetch and display the data
-    try:
-        api_data = fetch_prayer_data(city, country)
-        calculate_next_prayer(api_data, city)
-    except requests.exceptions.RequestException as e:
-        print(f"\nError connecting to the API: {e}")
+        # Fetch and display the data (runs only if choice 1 or 2 was successful)
+        try:
+            api_data = fetch_prayer_data(city, country)
+            calculate_next_prayer(api_data, city)
+        except requests.exceptions.RequestException as e:
+            print(f"\nError connecting to the API: {e}")
+            
+        # Pause so the user can read the times before the menu reprints
+        input("Press Enter to return to the main menu...")
