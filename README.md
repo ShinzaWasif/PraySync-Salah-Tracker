@@ -19,8 +19,9 @@ Welcome to PraySync
 ===================================
 1. Enter a specific city manually
 2. Use my current location (Auto-detect)
+3. Exit
 
-Please select an option (1 or 2): 2
+Please select an option (1, 2 or 3): 2
 
 Auto-detecting location from your IP address...
 Location detected: Karachi, PK
